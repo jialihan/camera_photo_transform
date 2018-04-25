@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<html>
+<head>
+    <meta charset="utf-8">
+    <!--<meta name="description" content="WebRTC code samples">-->
+    <!--<meta name="viewport" content="width=device-width, user-scalable=yes, initial-scale=1, maximum-scale=1">-->
+    <!--<meta itemprop="description" content="Client-side WebRTC code samples">-->
+
+    <!--<meta itemprop="name" content="WebRTC code samples">-->
+    <!--<meta name="mobile-web-app-capable" content="yes">-->
+    <!--<meta id="theme-color" name="theme-color" content="#ffffff">-->
+
+    <base target="_blank">
+
+    <title>Facial Expression Transform</title>
+    {% load static %}
+    <link href="{% static 'css/main.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
+    <link href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet" type="text/css">
+   <script>
+       $(document).ready(function(){
+           $.ajaxSetup({
+               data: {csrfmiddlewaretoken: '{{ csrf_token }}' },
+           });
+           $('#formadd').submit(function(){
+               var Pic = document.getElementById("myCanvas").toDataURL("image/jpeg");
+               Pic = Pic.replace(/^data:image\/(png|jpg);base64,/, "");
+               $.ajax({
+                   type:"POST",
+                   data: {img:Pic, id: 1},
+                   url: "/uploadPhoto/",
+                   cache: false,
+                   dataType: "html",
+                   success: function(result, statues, xml){
+                       alert(result);
+                   },
+                   error: function(){
+                       alert("false");
+                   }
+               });
+               return false;
+           });
+       });
+   </script>
+
+</head>
+
+<body>
+<div class="top_title">
+    Facial Expression Transformation
+</div>
+<div id="container">
+
+    <div id="sector">
+        <div id = "left">
+            <h3>Please Capture Smile Face!</h3>
+            <video autoplay></video>
+            <div class="row" style = "padding-top: 8px;">
+                <div class="col-sm-10">
+                    <div class="text-center">
+                        <button class="btn btn-primary">Snapshot</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id = "right">
+            <h3>After transformation: </h3>
+            {% csrf_token %}
+            <div id = "result">
+                <canvas id="myCanvas"></canvas>
+            </div>
+            <form method="post" id="formadd">
+                {% csrf_token %}
+                <div class="row" style = "padding-top: 7px;">
+                    <div class="col-sm-11">
+                        <div class="text-center">
+                                <button type="submit" id="submit" class="btn btn-success">Transform</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>Produced by Group2:</p>
+        <p>Jiali Han, Bin Wang, Mo Tang</p>
+        <p><a href="https://github.com/webrtc/samples/tree/gh-pages/src/content/getusermedia/canvas" title="View source for this page on GitHub" id="viewSource">View source on GitHub</a></p>
+    </div>
+
+
+</div>
+
+<script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
+<!--<script src="../../../js/common.js"></script>-->
+<!--<script src="../../../js/lib/ga.js"></script>-->
+<script src="{% static 'js/main.js' %}"></script>
+</body>
+</html>
