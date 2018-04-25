@@ -1,0 +1,14 @@
+Functions:
+
+1. capture a screenshot on openning Camera
+
+2. ajax send screenshot to django server 
+
+3. send back processed new image
+
+4. print new image on canvas
+
+Index page:
+localhost: 8000
+url request: /index
+
