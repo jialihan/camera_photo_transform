@@ -40,18 +40,18 @@ a:hover {
     text-decoration: underline;
 }
 
-a#viewSource {
-    display: block;
-    margin: 1.3em 0 0 0;
-    border-top: 1px solid #999;
-    padding: 1em 0 0 0;
-}
+/*a#viewSource {*/
+    /*display: block;*/
 
-div#links a {
-    display: block;
-    line-height: 1.3em;
-    margin: 0 0 1.5em 0;
-}
+    /*border-top: 1px solid #999;*/
+    /*padding: 1em 0 0 0;*/
+/*}*/
+
+/*div#links a {*/
+    /*display: block;*/
+    /*line-height: 1.3em;*/
+    /*margin: 0 0 1.5em 0;*/
+/*}*/
 
 div.outputSelector {
     margin: -1.3em 0 2em 0;
@@ -152,6 +152,8 @@ canvas{
     /*    font-size: 26px; */
     /*    padding-right: 15px;*/
 }
+
+
 
 /*canvas {
   background-color: #ccc;

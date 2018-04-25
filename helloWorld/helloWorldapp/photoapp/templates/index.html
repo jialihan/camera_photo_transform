@@ -23,6 +23,20 @@
 
     <link href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet" type="text/css">
    <script>
+//       function hexToBase64(str) {
+//           return btoa(String.fromCharCode.apply(null, str.replace(/\r|\n/g, "").replace(/([\da-fA-F]{2}) ?/g, "0x$1 ").replace(/ +$/, "").split(" ")));
+//       }
+       function drawImageScaled(img, ctx) {
+           var canvas = ctx.canvas ;
+           var hRatio = canvas.width  / img.width    ;
+           var vRatio =  canvas.height / img.height  ;
+           var ratio  = Math.min ( hRatio, vRatio );
+           var centerShift_x = ( canvas.width - img.width*ratio ) / 2;
+           var centerShift_y = ( canvas.height - img.height*ratio ) / 2;
+           ctx.clearRect(0,0,canvas.width, canvas.height);
+           ctx.drawImage(img, 0,0, img.width, img.height,
+               centerShift_x,centerShift_y,img.width*ratio, img.height*ratio);
+       }
        $(document).ready(function(){
            $.ajaxSetup({
                data: {csrfmiddlewaretoken: '{{ csrf_token }}' },
@@ -37,6 +51,16 @@
                    cache: false,
                    dataType: "html",
                    success: function(result, statues, xml){
+//                       var data_url = 'data:image/jpeg;base64,' + hexToBase64(result);
+                       var data_url = 'data:image/jpeg;base64,' + result;
+                       var c = document.getElementById('resultCanvas');
+                       var ctx = c.getContext('2d');
+                       var img = new Image;
+                       img.onload = function(){
+//                           ctx.drawImage(img,0,0); // Or at whatever offset you like
+                           drawImageScaled(img, ctx);
+                       };
+                       img.src = data_url;
                        alert(result);
                    },
                    error: function(){
@@ -69,9 +93,9 @@
             </div>
         </div>
         <div id = "right">
-            <h3>After transformation: </h3>
+            <h3> ScreenShot Captured: </h3>
             {% csrf_token %}
-            <div id = "result">
+            <div class = "result">
                 <canvas id="myCanvas"></canvas>
             </div>
             <form method="post" id="formadd">
@@ -87,10 +111,15 @@
         </div>
     </div>
 
+    <div class="transformed">
+        <h3> After transformation </h3>
+        <canvas id="resultCanvas"> </canvas>
+    </div>
+
     <div class="footer">
         <p>Produced by Group2:</p>
         <p>Jiali Han, Bin Wang, Mo Tang</p>
-        <p><a href="https://github.com/webrtc/samples/tree/gh-pages/src/content/getusermedia/canvas" title="View source for this page on GitHub" id="viewSource">View source on GitHub</a></p>
+        <p><a href="https://github.com/jialihan/camera_photo_transform" >View source on GitHub</a></p>
     </div>
 
 
